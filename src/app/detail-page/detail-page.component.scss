@@ -1,0 +1,191 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 380px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.detailId {
+  font-size: 22px;
+  margin-left: 15px;
+  padding-top: 33px;
+  color: #13294b;
+  font-weight: 400;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.detailFilter {
+  padding-top: 10px;
+  padding-left: 25px;
+}
+.detailLabel {
+  font-size: 85px;
+  margin-left: 15px;
+  padding-top: 77px;
+  color: #1e365a;
+  font-weight: 400;
+}
+.detailBladeModel {
+  color: #1e365a;
+  padding-top: 65px;
+  margin-left: 15px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.detailWtg {
+  color: #fff;
+  background-color: #1e365a;
+  padding-top: 10px;
+  margin-left: 15px;
+  padding-left: 18px;
+  width: 200px;
+  height: 110px;
+  border-radius: 5px;
+}
+.detailMainWtg {
+  padding-top: 20px;
+}
+.detailComment {
+  color: #30558b;
+  margin-left: 15px;
+  padding-top: 20px;
+  font-size: 30px;
+}
+
+.detailImg ::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+img {
+  max-width: 60%;
+  height: auto;
+  border-radius: 3px;
+  border: 0.5px solid gray;
+}
+
+.inline-block {
+  float: left;
+  width: 20%;
+  padding: 27px;
+}
+.detailNote {
+  padding: 15px;
+  border: none;
+  width: 40px;
+}
+.detailNoteLeft {
+  padding: 20px;
+  border: none;
+  width: 40px;
+  color: #0a1f3f;
+}
+.detailFilterImage {
+  width: 25px;
+  height: 25px;
+  color: #13294b;
+  margin-left: 10px;
+  border: none;
+}
+.detailNoteText {
+  color: #30558b;
+  float: inherit;
+}
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+.catColor {
+  border: none;
+}
+.mat-icon {
+  font-size: 30px;
+  padding-bottom: 6px;
+  padding-left: 220px;
+  cursor: pointer;
+}
+.addNote {
+  color: gray;
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 18px;
+  margin-top: 10px;
+}
+.addBtn {
+  margin-left: 140px;
+  color: #30558b;
+  margin-top: 20px;
+  font-size: 30px;
+}
+.AddnoteText {
+  margin-left: 140px;
+  font-size: 17px;
+  font-weight: 630;
+  color: #15386d;
+  margin-top: 3px;
+}
+.dialogInput {
+  width: 98%;
+  height: 50px;
+  border-radius: 5px;
+  border-color: gray;
+}
+.dialogContent {
+  margin-left: 12px;
+}
+.sidenavHeader {
+  font-weight: 600;
+  font-size: 30px;
+  text-align: center;
+  padding-top: 20px;
+}
+.sidenavDiv {
+  height: 100px;
+  background-color: rgb(229, 235, 233);
+}
+.imageNoteLength {
+  margin-left: -11px;
+  margin-top: -9px;
+  color: #16547e;
+}
+.bladeNoteLength {
+  margin-left: -18px;
+  margin-top: -11px;
+  color: #43167e;
+}
+.dialogDate {
+  font-size: 19px;
+  font-weight: 600;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  margin-left: 10px;
+}
+.dialogNote {
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 10px;
+  padding-top: 10px;
+}
+.dialogMatBtn {
+  margin-top: 10px;
+  margin-left: -3px;
+}
+.closeBtn {
+  margin-left: 310px;
+  font-size: 16px;
+  background-color: #1b3a69;
+  color: #fff;
+}

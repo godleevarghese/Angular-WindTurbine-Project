@@ -1,0 +1,448 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'over'"
+    [(opened)]="sidenavOpen"
+    position="end"
+  >
+    <mat-toolbar style="background-color: #13294b; color: #fff"
+      >Add notes
+      <mat-icon (click)="drawer.toggle()">close</mat-icon></mat-toolbar
+    >
+
+    <div class="sidenavDiv">
+      <h1 class="sidenavHeader">
+        {{ "Blade-" + selectedBlade + " / Image-" + selectedImage }}
+      </h1>
+      <h4 style="text-align: center">Add/Edit notes</h4>
+    </div>
+
+    <button
+      class="addBtn"
+      mat-raised-button
+      (click)="openDialogAdd(templateDialog)"
+    >
+      +
+    </button>
+    <h4 class="AddnoteText">Add note</h4>
+    <hr />
+    <div *ngFor="let notes of noteSet; let j = index" class="dialogContent">
+      <div class="dialogDate">
+        {{ JSON.stringify(notes.date) | date }}
+      </div>
+      <div class="dialogNote">
+        {{ JSON.stringify(notes.text) }}
+      </div>
+      <div class="dialogMatBtn">
+        <button
+          mat-button
+          color="primary"
+          style="font-size: 16px"
+          (click)="openDialogEdit(templateDialogEdit); edit(j)"
+        >
+          EDIT
+        </button>
+        <button
+          mat-button
+          color="primary"
+          style="font-size: 16px"
+          (click)="openDialogDelete(templateDialogDelete); delete(j)"
+        >
+          DELETE
+        </button>
+      </div>
+      <hr />
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar style="background-color: #13294b; color: #fff">
+      <span style="font-weight: 500; font-size: 30px">My Application</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <!-- Blade-A  start -->
+    <div class="bounds">
+      <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+        <div fxFlex="25" class="sec1" fxFlex.xs="55">
+          <!-- Dialog box start -->
+          <!-- Dialog box add note start -->
+          <ng-template #templateDialog>
+            <div>
+              <h1 style="font-weight: 600">
+                Add notes
+                <button class="closeBtn" (click)="closeBtn()">x</button>
+              </h1>
+
+              <form [formGroup]="noteForm">
+                <input
+                  type="text"
+                  class="dialogInput"
+                  formControlName="notes"
+                  id="input"
+                  value="inputValue"
+                />
+
+                <hr />
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="clearInput()"
+                >
+                  clear
+                </button>
+                <button
+                  mat-raised-button
+                  color="accent"
+                  style="margin-left: 320px"
+                  (click)="saveNote()"
+                  [disabled]="noteForm.invalid"
+                >
+                  save
+                </button>
+              </form>
+            </div>
+          </ng-template>
+          <!-- Dialog box add note end -->
+          <!-- Dialog edit box start -->
+          <ng-template #templateDialogEdit>
+            <div>
+              <h1 style="font-weight: 600">
+                Edit notes
+                <button class="closeBtn" (click)="closeBtn()">x</button>
+              </h1>
+              <form [formGroup]="noteForm">
+                <input
+                  type="text"
+                  class="dialogInput"
+                  formControlName="notes"
+                  id="input"
+                  value="inputValue"
+                />
+
+                <hr />
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="clearInput()"
+                >
+                  clear
+                </button>
+                <button
+                  mat-raised-button
+                  color="accent"
+                  style="margin-left: 320px"
+                  (click)="editNote()"
+                >
+                  save
+                </button>
+              </form>
+            </div>
+          </ng-template>
+          <!-- Dialog Edit box end -->
+          <!-- Dialog delete confirmation start -->
+          <ng-template #templateDialogDelete>
+            <div>
+              <h1 style="font-weight: 600">
+                Delete note
+                <button
+                  class="closeBtn"
+                  style="margin-left: 298px"
+                  (click)="closeBtn()"
+                >
+                  x
+                </button>
+              </h1>
+              <h4>Are you sure want to delete this note?</h4>
+              <hr />
+              <button mat-raised-button color="primary" (click)="closeDialog()">
+                cancel
+              </button>
+              <button
+                mat-raised-button
+                color="warn"
+                style="margin-left: 306px"
+                (click)="deleteItem()"
+              >
+                Delete
+              </button>
+            </div>
+          </ng-template>
+          <!-- Dialog delete confirmation end -->
+
+          <!-- Dialog box end -->
+          <div *ngFor="let i of displayRowList" class="detailId">
+            {{ i.wtg_id }}
+          </div>
+          <div *ngFor="let i of displayRowList" class="detailLabel">
+            {{ i.blades[0].label }}
+          </div>
+
+          <div *ngFor="let i of displayRowList" class="detailBladeModel">
+            S/N :
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+            {{ i.blades[0].serial_number }} <br />
+            {{ "Blade Model :" + i.blade_model }}
+          </div>
+          <div class="detailMainWtg">
+            <div class="detailWtg">
+              <div *ngFor="let i of displayRowList" class="">
+                {{ "WTG :" + i.wtg_id }}<br />
+                {{ "Class :" + i.wtg_class }}<br />
+                {{ "Farm :" + i.farm }}<br />
+                {{ "WTG Model :" + i.wtg_model }}<br />
+              </div>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <img
+              src="../../assets/images/notes.png"
+              alt=""
+              class="detailNoteLeft"
+              (click)="bladeClick(bladeA.notes, bladeA.blade_id.slice(5, 6))"
+            />
+            <div class="bladeNoteLength">{{ bladeA.notes?.length }}</div>
+            <div class="addNote">Add note</div>
+          </div>
+        </div>
+        <div fxFlex="100" class="sec2" fxFlex.xs="15">
+          <div class="detailFilter">
+            <mat-form-field appearance="fill">
+              <mat-label>{{ filterWtg_Id }}</mat-label>
+              <mat-select
+                [(value)]="filterWtg_Id"
+                (selectionChange)="onToggleFilter($event)"
+              >
+                <mat-option *ngFor="let wtg_id of wtg_idList" [value]="wtg_id">
+                  {{ wtg_id }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>{{ filterDate }}</mat-label>
+              <mat-select
+                [(value)]="filterDate"
+                (selectionChange)="onToggleFilter($event)"
+              >
+                <mat-option *ngFor="let date of dateList" [value]="date">
+                  {{ date }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <img
+              src="../../assets/images/filter.png"
+              alt=""
+              class="detailFilterImage"
+            />
+          </div>
+          <div class="detailImg">
+            <div
+              class="inline-block"
+              *ngFor="let i of bladeA.images; let j = index"
+            >
+              <img src="../assets/images/{{ i.URI }}" alt="" />
+              <div
+                fxFlex="50"
+                fxLayout="column"
+                fxLayoutAlign="space-around center"
+                style="padding: 3px"
+              >
+                <img [src]="getImgSrc(i.image_cat)" class="catColor" />
+
+                {{
+                  "cat. " +
+                    (i.image_cat.validated != null
+                      ? i.image_cat.validated
+                      : i.image_cat.auto)
+                }}
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  <img
+                    src="../../assets/images/notes.png"
+                    alt=""
+                    class="detailNote"
+                    (click)="
+                      imageClick(
+                        bladeA.inspection_date.slice(0, 10),
+                        bladeA.blade_id.slice(5, 6),
+                        j,
+                        i.notes
+                      )
+                    "
+                  />
+                  <div class="imageNoteLength">{{ i.notes.length }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <!-- Blade-A end -->
+      <!-- Blade-B start -->
+
+      <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+        <div fxFlex="25" class="sec1" fxFlex.xs="55">
+          <div *ngFor="let i of displayRowList" class="detailLabel">
+            {{ i.blades[1].label }}
+          </div>
+
+          <div *ngFor="let i of displayRowList" class="detailBladeModel">
+            S/N :
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+            {{ i.blades[0].serial_number }} <br />
+            {{ "Blade Model :" + i.blade_model }}
+          </div>
+          <div class="detailMainWtg">
+            <div class="detailWtg">
+              <div *ngFor="let i of displayRowList" class="">
+                {{ "WTG :" + i.wtg_id }}<br />
+                {{ "Class :" + i.wtg_class }}<br />
+                {{ "Farm :" + i.farm }}<br />
+                {{ "WTG Model :" + i.wtg_model }}<br />
+              </div>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <img
+              src="../../assets/images/notes.png"
+              alt=""
+              class="detailNoteLeft"
+              (click)="bladeClick(bladeB.notes, bladeB.blade_id.slice(5, 6))"
+            />
+            <div class="bladeNoteLength">{{ bladeB.notes?.length }}</div>
+            <div class="addNote">Add note</div>
+          </div>
+        </div>
+
+        <div fxFlex="100" class="sec2" fxFlex.xs="15">
+          <div class="detailImg">
+            <div
+              class="inline-block"
+              *ngFor="let i of bladeB.images; let j = index"
+            >
+              <img src="../assets/images/{{ i.URI }}" alt="" />
+
+              <div
+                fxFlex="50"
+                fxLayout="column"
+                fxLayoutAlign="space-around center"
+              >
+                <img [src]="getImgSrc(i.image_cat)" class="catColor" />
+
+                {{
+                  "cat. " +
+                    (i.image_cat.validated != null
+                      ? i.image_cat.validated
+                      : i.image_cat.auto)
+                }}
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  <img
+                    src="../../assets/images/notes.png"
+                    alt=""
+                    class="detailNote"
+                    (click)="
+                      imageClick(
+                        bladeB.inspection_date.slice(0, 10),
+                        bladeB.blade_id.slice(5, 6),
+                        j,
+                        i.notes
+                      )
+                    "
+                  />
+                  <div class="imageNoteLength">{{ i.notes.length }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <!-- Blade-B end-->
+      <!-- Blade C start -->
+      <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+        <div fxFlex="25" class="sec1" fxFlex.xs="55">
+          <div *ngFor="let i of displayRowList" class="detailLabel">
+            {{ i.blades[2].label }}
+          </div>
+
+          <div *ngFor="let i of displayRowList" class="detailBladeModel">
+            S/N :
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+            {{ i.blades[0].serial_number }} <br />
+            {{ "Blade Model :" + i.blade_model }}
+          </div>
+          <div class="detailMainWtg">
+            <div class="detailWtg">
+              <div *ngFor="let i of displayRowList" class="">
+                {{ "WTG :" + i.wtg_id }}<br />
+                {{ "Class :" + i.wtg_class }}<br />
+                {{ "Farm :" + i.farm }}<br />
+                {{ "WTG Model :" + i.wtg_model }}<br />
+              </div>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <img
+              src="../../assets/images/notes.png"
+              alt=""
+              class="detailNoteLeft"
+              (click)="bladeClick(bladeC.notes, bladeC.blade_id.slice(5, 6))"
+            />
+            <div class="bladeNoteLength">{{ bladeC.notes?.length }}</div>
+            <div class="addNote">Add note</div>
+          </div>
+        </div>
+
+        <div fxFlex="100" class="sec2" fxFlex.xs="15">
+          <div class="detailImg">
+            <div
+              class="inline-block"
+              *ngFor="let i of bladeC.images; let j = index"
+            >
+              <img src="../assets/images/{{ i.URI }}" alt="" />
+              <div
+                fxFlex="50"
+                fxLayout="column"
+                fxLayoutAlign="space-around center"
+              >
+                <img [src]="getImgSrc(i.image_cat)" class="catColor" />
+
+                {{
+                  "cat. " +
+                    (i.image_cat.validated != null
+                      ? i.image_cat.validated
+                      : i.image_cat.auto)
+                }}
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  <img
+                    src="../../assets/images/notes.png"
+                    alt=""
+                    class="detailNote"
+                    (click)="
+                      imageClick(
+                        bladeC.inspection_date.slice(0, 10),
+                        bladeC.blade_id.slice(5, 6),
+                        j,
+                        i.notes
+                      )
+                    "
+                  />
+                  <div class="imageNoteLength">{{ i.notes.length }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Blade-C end -->
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
