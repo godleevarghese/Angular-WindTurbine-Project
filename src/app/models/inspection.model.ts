@@ -9,7 +9,7 @@ export interface Inspection {
 
 export interface BladeCat {
   auto: number;
-  validated: number;
+  validated: number | null;
 }
 
 export interface Note {

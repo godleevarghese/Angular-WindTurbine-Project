@@ -31,7 +31,7 @@
     <hr />
     <div *ngFor="let notes of noteSet; let j = index" class="dialogContent">
       <div class="dialogDate">
-        {{ JSON.stringify(notes.date) | date }}
+        {{ JSON.stringify(notes.date) | date: "medium" }}
       </div>
       <div class="dialogNote">
         {{ JSON.stringify(notes.text) }}
@@ -144,16 +144,7 @@
           <!-- Dialog delete confirmation start -->
           <ng-template #templateDialogDelete>
             <div>
-              <h1 style="font-weight: 600">
-                Delete note
-                <button
-                  class="closeBtn"
-                  style="margin-left: 298px"
-                  (click)="closeBtn()"
-                >
-                  x
-                </button>
-              </h1>
+              <h1 style="font-weight: 600">Delete note</h1>
               <h4>Are you sure want to delete this note?</h4>
               <hr />
               <button mat-raised-button color="primary" (click)="closeDialog()">
@@ -175,8 +166,23 @@
           <div *ngFor="let i of displayRowList" class="detailId">
             {{ i.wtg_id }}
           </div>
-          <div *ngFor="let i of displayRowList" class="detailLabel">
-            {{ i.blades[0].label }}
+          <div
+            *ngFor="let i of displayRowList"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <div class="detailLabel">{{ i.blades[0].label }}</div>
+            <div
+              style="
+                width: 150px;
+                height: 50px;
+                padding-top: 15px;
+                padding-left: 5px;
+              "
+            >
+              <app-category [category]="i.blades[0].blade_cat" [isBlade]="true">
+              </app-category>
+            </div>
           </div>
 
           <div *ngFor="let i of displayRowList" class="detailBladeModel">
@@ -251,14 +257,12 @@
                 fxLayoutAlign="space-around center"
                 style="padding: 3px"
               >
-                <img [src]="getImgSrc(i.image_cat)" class="catColor" />
-
-                {{
-                  "cat. " +
-                    (i.image_cat.validated != null
-                      ? i.image_cat.validated
-                      : i.image_cat.auto)
-                }}
+                <app-category
+                  [category]="i.image_cat"
+                  [bladeLabel]="bladeA.blade_id"
+                  [isChange]="isChange"
+                  (catEvent)="bladeImgSet($event)"
+                ></app-category>
                 <div fxLayout="row" fxLayoutAlign="start center">
                   <img
                     src="../../assets/images/notes.png"
@@ -286,8 +290,25 @@
 
       <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
         <div fxFlex="25" class="sec1" fxFlex.xs="55">
-          <div *ngFor="let i of displayRowList" class="detailLabel">
-            {{ i.blades[1].label }}
+          <div
+            *ngFor="let i of displayRowList"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <div class="detailLabel">{{ i.blades[1].label }}</div>
+            <div
+              style="
+                width: 150px;
+                height: 50px;
+                padding-top: 15px;
+                padding-left: 5px;
+              "
+            >
+              <app-category
+                [category]="i.blades[1].blade_cat"
+                [isBlade]="true"
+              ></app-category>
+            </div>
           </div>
 
           <div *ngFor="let i of displayRowList" class="detailBladeModel">
@@ -333,14 +354,12 @@
                 fxLayout="column"
                 fxLayoutAlign="space-around center"
               >
-                <img [src]="getImgSrc(i.image_cat)" class="catColor" />
+                <app-category
+                  [category]="i.image_cat"
+                  [bladeLabel]="bladeB.blade_id"
+                  (catEvent)="bladeImgSet($event)"
+                ></app-category>
 
-                {{
-                  "cat. " +
-                    (i.image_cat.validated != null
-                      ? i.image_cat.validated
-                      : i.image_cat.auto)
-                }}
                 <div fxLayout="row" fxLayoutAlign="start center">
                   <img
                     src="../../assets/images/notes.png"
@@ -367,8 +386,25 @@
       <!-- Blade C start -->
       <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
         <div fxFlex="25" class="sec1" fxFlex.xs="55">
-          <div *ngFor="let i of displayRowList" class="detailLabel">
-            {{ i.blades[2].label }}
+          <div
+            *ngFor="let i of displayRowList"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <div class="detailLabel">{{ i.blades[2].label }}</div>
+            <div
+              style="
+                width: 150px;
+                height: 50px;
+                padding-top: 15px;
+                padding-left: 5px;
+              "
+            >
+              <app-category
+                [category]="i.blades[2].blade_cat"
+                [isBlade]="true"
+              ></app-category>
+            </div>
           </div>
 
           <div *ngFor="let i of displayRowList" class="detailBladeModel">
@@ -413,14 +449,12 @@
                 fxLayout="column"
                 fxLayoutAlign="space-around center"
               >
-                <img [src]="getImgSrc(i.image_cat)" class="catColor" />
+                <app-category
+                  [category]="i.image_cat"
+                  [bladeLabel]="bladeC.blade_id"
+                  (catEvent)="bladeImgSet($event)"
+                ></app-category>
 
-                {{
-                  "cat. " +
-                    (i.image_cat.validated != null
-                      ? i.image_cat.validated
-                      : i.image_cat.auto)
-                }}
                 <div fxLayout="row" fxLayoutAlign="start center">
                   <img
                     src="../../assets/images/notes.png"

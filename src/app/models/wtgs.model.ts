@@ -15,7 +15,7 @@ export interface Wtgs {
 
 export interface Category {
   auto: number;
-  validated: number;
+  validated: number | null;
 }
 
 export interface Blade {

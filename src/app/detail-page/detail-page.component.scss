@@ -26,7 +26,6 @@
 }
 .detailFilter {
   padding-top: 10px;
-  padding-left: 25px;
 }
 .detailLabel {
   font-size: 85px;
@@ -68,7 +67,7 @@
   display: table;
 }
 img {
-  max-width: 60%;
+  max-width: 64%;
   height: auto;
   border-radius: 3px;
   border: 0.5px solid gray;
@@ -76,8 +75,9 @@ img {
 
 .inline-block {
   float: left;
-  width: 20%;
-  padding: 27px;
+  width: 30%;
+  // padding: 35px;
+  padding-top: 20px;
 }
 .detailNote {
   padding: 15px;

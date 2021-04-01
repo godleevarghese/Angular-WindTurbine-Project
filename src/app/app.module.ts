@@ -17,12 +17,14 @@ import { AgGridModule } from 'ag-grid-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailPageComponent } from './detail-page/detail-page.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DetailPageComponent,
     GridComponent,
+    CategoryComponent,
   ],entryComponents:[],
   imports: [
     BrowserModule,

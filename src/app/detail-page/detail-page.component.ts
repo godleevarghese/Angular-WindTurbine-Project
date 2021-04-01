@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -8,7 +8,7 @@ import { TurbineService } from '../services/turbine.service';
 import { Wtgs } from '../models/wtgs.model';
 import { BladeCat, Inspection, Note } from '../models/inspection.model';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, max, shareReplay } from 'rxjs/operators';
 import { CatColors } from '../app.constants';
 
 @Component({
@@ -30,14 +30,14 @@ export class DetailPageComponent implements OnInit {
   inspectionList: Inspection[] = JSON.parse(
     JSON.stringify(this.turbineService.inspectionList)
   );
+  @Output() turbineEvent = new EventEmitter();
+  isChange: boolean = false;
   data: any = [];
   displayRowList: Wtgs[] = [];
   displayInspectionList: Inspection[] = [];
-  imgListA: any[] = [];
   bladeA: any = {};
   bladeB: any = {};
   bladeC: any = {};
-  BladeCatA: any[] = [];
   wtg_idList: string[] = [];
   dateList: string[] = [];
   filterWtg_Id: string = '';
@@ -47,13 +47,10 @@ export class DetailPageComponent implements OnInit {
   sidenavOpen: boolean = false;
   JSON = JSON;
   selectedDate: string = '';
-  dialogInspectionList: any[] = [];
-  dialogData: any;
   noteSet: Note[] = [];
-  noteBlade: Note[] = [];
   indexDelete: number = 0;
   indexEdit: number = 0;
-  dataEdit: string = '';
+  imgSrcCopy: string[] = [];
 
   noteForm = new FormGroup({
     notes: new FormControl('', Validators.required),
@@ -116,7 +113,7 @@ export class DetailPageComponent implements OnInit {
 
     const isValidated = imageCat.validated != null;
     imageSrc += isValidated ? '-filled.png' : '-unfilled.png';
-
+    this.imgSrcCopy.push(imageSrc);
     return imageSrc;
   }
 
@@ -280,5 +277,45 @@ export class DetailPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
     });
+  }
+
+  bladeImgSet(data: any) {
+    const bladeKey = 'blade' + data.bladeType;
+
+    let bladeCat: number =
+      this[bladeKey as keyof DetailPageComponent].images[0].image_cat
+        .validated ??
+      this[bladeKey as keyof DetailPageComponent].images[0].image_cat.auto;
+
+    this[bladeKey as keyof DetailPageComponent].images.forEach(
+      (element: any) => {
+        const cat = element.image_cat.validated ?? element.image_cat.auto;
+        if (cat > bladeCat) {
+          bladeCat = cat;
+        }
+      }
+    );
+    // console.log(bladeCat)
+    this[bladeKey as keyof DetailPageComponent].blade_cat.auto = bladeCat;
+    this.isChange = !this.isChange;
+    this.turbineImgSet(bladeCat);
+  }
+
+  private turbineImgSet(bladeCat: number) {
+    let maxDate = this.dateList.reduce(function (a, b) {
+      return a > b ? a : b;
+    });
+    console.log(maxDate);
+    if (maxDate == this.data.date) {
+      console.log(bladeCat);
+      // this.turbineEvent.emit(bladeCat)
+      this.rowDataList.forEach((el) => {
+        if (el.wtg_id == this.data.id) {
+          el.WTG_cat.validated = null;
+          el.WTG_cat.auto = bladeCat;
+          console.log(el.WTG_cat);
+        }
+      });
+    }
   }
 }
