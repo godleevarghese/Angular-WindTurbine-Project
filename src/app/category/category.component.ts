@@ -15,6 +15,9 @@ export class CategoryComponent implements OnInit {
   @Output() catEvent = new EventEmitter<{
     bladeType: string;
   }>();
+  @Output() turbineEvent = new EventEmitter<{
+    bladeId: string;
+  }>();
   isClicked: boolean = false;
   imageSrc: string = '';
   cat: number = -1;
@@ -55,8 +58,13 @@ export class CategoryComponent implements OnInit {
     this.isClicked = false;
     this.category.validated = color;
     const bladeType = bladeID.slice(5, 6);
+    const bladeId=bladeID.slice(0,4)
+    console.log(bladeId)
     this.catEvent.emit({
       bladeType: bladeType,
+    });
+    this.turbineEvent.emit({
+      bladeId: bladeId,
     });
   }
 

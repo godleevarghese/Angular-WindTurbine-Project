@@ -279,6 +279,8 @@ export class DetailPageComponent implements OnInit {
     });
   }
 
+  // setting blade image category
+
   bladeImgSet(data: any) {
     const bladeKey = 'blade' + data.bladeType;
 
@@ -295,25 +297,29 @@ export class DetailPageComponent implements OnInit {
         }
       }
     );
-    // console.log(bladeCat)
     this[bladeKey as keyof DetailPageComponent].blade_cat.auto = bladeCat;
     this.isChange = !this.isChange;
-    this.turbineImgSet(bladeCat);
   }
 
-  private turbineImgSet(bladeCat: number) {
+  // setting turbine category
+
+  setTurbineImg(bladeData: any) {
     let maxDate = this.dateList.reduce(function (a, b) {
       return a > b ? a : b;
     });
-    console.log(maxDate);
     if (maxDate == this.data.date) {
-      console.log(bladeCat);
-      // this.turbineEvent.emit(bladeCat)
       this.rowDataList.forEach((el) => {
-        if (el.wtg_id == this.data.id) {
-          el.WTG_cat.validated = null;
-          el.WTG_cat.auto = bladeCat;
-          console.log(el.WTG_cat);
+        if (el.wtg_id == bladeData.bladeId) {
+          let turbineCat =
+            el.blades[0].blade_cat.validated ?? el.blades[0].blade_cat.auto;
+          el.blades.forEach((item: any) => {
+            const turCat = item.blade_cat.validated ?? item.blade_cat.auto;
+            if (turCat > turbineCat) {
+              turbineCat = turCat;
+            }
+          });
+          el.WTG_cat.auto = turbineCat;
+          console.log(turbineCat);
         }
       });
     }

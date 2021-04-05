@@ -180,7 +180,12 @@
                 padding-left: 5px;
               "
             >
-              <app-category [category]="i.blades[0].blade_cat" [isBlade]="true">
+              <app-category
+                [category]="i.blades[0].blade_cat"
+                [bladeLabel]="bladeA.blade_id"
+                [isBlade]="true"
+                (turbineEvent)="setTurbineImg($event)"
+              >
               </app-category>
             </div>
           </div>
@@ -306,8 +311,11 @@
             >
               <app-category
                 [category]="i.blades[1].blade_cat"
+                [bladeLabel]="bladeB.blade_id"
                 [isBlade]="true"
-              ></app-category>
+                (turbineEvent)="setTurbineImg($event)"
+              >
+              </app-category>
             </div>
           </div>
 
@@ -402,8 +410,11 @@
             >
               <app-category
                 [category]="i.blades[2].blade_cat"
+                [bladeLabel]="bladeC.blade_id"
                 [isBlade]="true"
-              ></app-category>
+                (turbineEvent)="setTurbineImg($event)"
+              >
+              </app-category>
             </div>
           </div>
 
