@@ -10,6 +10,7 @@ import { BladeCat, Inspection, Note } from '../models/inspection.model';
 import { Observable } from 'rxjs';
 import { map, max, shareReplay } from 'rxjs/operators';
 import { CatColors } from '../app.constants';
+import { CompareImageComponent } from '../compare-image/compare-image.component';
 
 @Component({
   selector: 'app-detail-page',
@@ -31,6 +32,7 @@ export class DetailPageComponent implements OnInit {
     JSON.stringify(this.turbineService.inspectionList)
   );
   @Output() turbineEvent = new EventEmitter();
+  
   isChange: boolean = false;
   data: any = [];
   displayRowList: Wtgs[] = [];
@@ -51,6 +53,7 @@ export class DetailPageComponent implements OnInit {
   indexDelete: number = 0;
   indexEdit: number = 0;
   imgSrcCopy: string[] = [];
+  compareArray: any[] = [];
 
   noteForm = new FormGroup({
     notes: new FormControl('', Validators.required),
@@ -323,5 +326,54 @@ export class DetailPageComponent implements OnInit {
         }
       });
     }
+  }
+
+  // compare dilogbox
+
+  dialogBoxCompare() {
+    const dialogRef = this.dialog.open(CompareImageComponent, {
+      width: '980px',
+      height: '450px',
+      data: {
+        imageDetails: this.compareArray,
+        listA: this.bladeA,
+        listB: this.bladeB,
+        listC: this.bladeC,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.compareArray = [];
+    });
+  }
+
+  // comparing image selected
+
+  compareImage(image: any) {
+    //check add/remove-check if item in list
+    //while adding max 3
+    const imageIndex = this.compareArray.findIndex((item) => {
+      return item.image_hash === image.image_hash;
+    });
+    if (imageIndex == -1) {
+      //add
+      if (this.compareArray.length <= 2) {
+        this.compareArray.push(image);
+      }
+    } else {
+      //remove
+      this.compareArray.splice(imageIndex, 1);
+    }
+   
+  }
+
+  // image selection on click
+
+  imageStyle(imagehash: string): boolean {
+    const check = this.compareArray.some((item) => {
+      return item.image_hash === imagehash;
+    });
+    return check;
   }
 }

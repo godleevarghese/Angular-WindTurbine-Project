@@ -1,23 +1,9 @@
-// @import'../../../node_modules/sass-loader/dist/cjs.js';
 
-.sidenav-container {
-  height: 100%;
-}
-.sidenav {
-  width: auto;
-}
-.sidenav .mat-toolbar {
-  background: inherit;
-}
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}.grid {
+.grid {
   padding-top: 5px;
 }
 .filter {
-  padding-left: 200px;
+  padding-left: 220px;
   padding-top: 20px;
   height: 40px;
 }

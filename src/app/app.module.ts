@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatBadgeModule} from '@angular/material/badge'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailPageComponent } from './detail-page/detail-page.component';
 import { CategoryComponent } from './category/category.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { CompareImageComponent } from './compare-image/compare-image.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,8 @@ import { CategoryComponent } from './category/category.component';
     DetailPageComponent,
     GridComponent,
     CategoryComponent,
+    SidenavComponent,
+    CompareImageComponent,
   ],entryComponents:[],
   imports: [
     BrowserModule,
@@ -43,7 +48,8 @@ import { CategoryComponent } from './category/category.component';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatBadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

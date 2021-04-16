@@ -1,0 +1,36 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+    style="background-color: rgb(237, 238, 245)"
+  >
+    <mat-toolbar style="background-color: #13294b; color: #fff"
+      >Menu</mat-toolbar
+    >
+    <mat-nav-list style="padding-top: 30px">
+      <a mat-list-item href="#" class="sidenavItems">Home</a>
+      <a mat-list-item href="#" class="sidenavItems">About</a>
+      <a mat-list-item href="#" class="sidenavItems">Settings</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar style="background-color: #13294b; color: #fff">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Windmill Inspection Application</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <app-grid></app-grid>
+  </mat-sidenav-content>
+</mat-sidenav-container>

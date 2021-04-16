@@ -59,7 +59,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar style="background-color: #13294b; color: #fff">
-      <span style="font-weight: 500; font-size: 30px">My Application</span>
+      <span style="font-weight: 500; font-size: 30px">Inspection Details</span>
     </mat-toolbar>
     <!-- Add Content Here -->
     <!-- Blade-A  start -->
@@ -249,18 +249,36 @@
               alt=""
               class="detailFilterImage"
             />
+
+            <button
+              mat-raised-button
+              class="compare"
+              [matBadgeHidden]="compareArray.length == 0"
+              matBadge="{{ compareArray.length }}"
+              matBadgePosition="after"
+              matBadgeColor="primary"
+              (click)="dialogBoxCompare()"
+            >
+              Compare
+            </button>
           </div>
           <div class="detailImg">
             <div
               class="inline-block"
               *ngFor="let i of bladeA.images; let j = index"
             >
-              <img src="../assets/images/{{ i.URI }}" alt="" />
+              <img
+                src="../assets/images/{{ i.URI }}"
+                alt=""
+                [ngClass]="{ changestyle: imageStyle(i.image_hash) }"
+                (click)="compareImage(i)"
+              />
               <div
                 fxFlex="50"
                 fxLayout="column"
                 fxLayoutAlign="space-around center"
-                style="padding: 3px"
+                style="padding: 3px;"
+
               >
                 <app-category
                   [category]="i.image_cat"
@@ -355,7 +373,12 @@
               class="inline-block"
               *ngFor="let i of bladeB.images; let j = index"
             >
-              <img src="../assets/images/{{ i.URI }}" alt="" />
+              <img
+                src="../assets/images/{{ i.URI }}"
+                alt=""
+                [ngClass]="{ changestyle: imageStyle(i.image_hash) }"
+                (click)="compareImage(i)"
+              />
 
               <div
                 fxFlex="50"
@@ -454,7 +477,12 @@
               class="inline-block"
               *ngFor="let i of bladeC.images; let j = index"
             >
-              <img src="../assets/images/{{ i.URI }}" alt="" />
+              <img
+                src="../assets/images/{{ i.URI }}"
+                alt=""
+                [ngClass]="{ changestyle: imageStyle(i.image_hash) }"
+                (click)="compareImage(i)"
+              />
               <div
                 fxFlex="50"
                 fxLayout="column"

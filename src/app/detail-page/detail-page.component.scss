@@ -76,18 +76,19 @@ img {
 .inline-block {
   float: left;
   width: 30%;
-  // padding: 35px;
-  padding-top: 20px;
+  padding-top: 35px;
 }
 .detailNote {
   padding: 15px;
   border: none;
   width: 40px;
+  cursor: pointer;
 }
 .detailNoteLeft {
   padding: 20px;
   border: none;
   width: 40px;
+  cursor: pointer;
   color: #0a1f3f;
 }
 .detailFilterImage {
@@ -188,4 +189,15 @@ hr {
   font-size: 16px;
   background-color: #1b3a69;
   color: #fff;
+}
+.changestyle {
+  border: 3.5px solid rgb(15, 80, 40);
+  border-radius: 5px;
+}
+.compare {
+  margin-left: 332px;
+  background-color: rgb(36, 73, 47);
+  color: #fff;
+  height: 46px;
+  font-size: 16px;
 }

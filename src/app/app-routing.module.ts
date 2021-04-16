@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GridComponent } from './grid/grid.component';
 import { DetailPageComponent } from './detail-page/detail-page.component';
+import {SidenavComponent} from './sidenav/sidenav.component'
 
 const routes: Routes = [
-  { path: '', component: GridComponent, pathMatch: 'full' },
+  { path: '', component: SidenavComponent, pathMatch: 'full' },
   {
     path: 'detail/:id/:date',
     component: DetailPageComponent,

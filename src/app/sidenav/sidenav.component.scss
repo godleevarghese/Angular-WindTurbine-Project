@@ -1,0 +1,21 @@
+.sidenav-container {
+  height: 100%;
+}
+.sidenav {
+  width: 170px;
+}
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.sidenavItems {
+  color: rgb(11, 46, 99);
+  font-weight: 580;
+  font-size: 19px;
+  margin-top: 6px;
+  font-family: Arial, Helvetica, sans-serif;
+}

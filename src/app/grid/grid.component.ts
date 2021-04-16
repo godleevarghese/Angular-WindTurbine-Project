@@ -1,10 +1,7 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { TurbineService } from '../services/turbine.service';
 import { Wtgs } from '../models/wtgs.model';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-grid',
@@ -12,13 +9,6 @@ import { map, shareReplay } from 'rxjs/operators';
   styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent implements OnInit {
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
-
   columnDefs: any[] = [];
   rowDataList: Wtgs[] = JSON.parse(
     JSON.stringify(this.turbineService.wtgsList)
@@ -32,11 +22,7 @@ export class GridComponent implements OnInit {
   filterWtgIdList: string[] = [];
   filterWtgCatList: string[] = [];
 
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private turbineService: TurbineService,
-    private router: Router
-  ) {}
+  constructor(private turbineService: TurbineService, private router: Router) {}
 
   ngOnInit() {
     this.setColoumDef();
